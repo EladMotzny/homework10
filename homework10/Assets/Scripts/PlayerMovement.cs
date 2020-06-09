@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public int score;
     public AudioSource coinSound;
     public TextMeshProUGUI scoreDisplay;
+    public int coinsCollected = 0;
+    public static bool collectedAll = false;
 
     private void Start()
     {
@@ -75,13 +78,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Coin")
+        if (other.tag == "Coin")
         {
-            //Add to score
+            coinsCollected++;
             score += 100;
             scoreDisplay.text = "Score: " + score.ToString();
             coinSound.Play();
             Destroy(other.gameObject);
+        }
+        if (other.tag == "Finish")
+        {
+            if(coinsCollected == 21)
+            {
+                collectedAll = true;
+            }
+            SceneManager.LoadScene("GameOver");
         }
     }
 

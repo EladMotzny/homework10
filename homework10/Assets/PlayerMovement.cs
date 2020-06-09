@@ -17,14 +17,19 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+
     // Update is called once per frame
     void Update()
     {
+        //CheckForWall();
+        //WallRunInput();
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            gravity = -9.81f;
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -43,5 +48,20 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!controller.isGrounded && hit.normal.y < 0.1f)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                //Debug.DrawRay(hit.point, hit.normal, Color.red, 1.25f);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+        }
+    }
+
+    
 }

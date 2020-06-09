@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,12 +18,19 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+    public int score;
+    public AudioSource coinSound;
+    public TextMeshProUGUI scoreDisplay;
+
+    private void Start()
+    {
+        coinSound = GetComponent<AudioSource>();
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        //CheckForWall();
-        //WallRunInput();
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -59,9 +67,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.DrawRay(hit.point, hit.normal, Color.red, 1.25f);
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                
             }
         }
     }
 
-    
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "Coin")
+        {
+            //Add to score
+            score += 100;
+            scoreDisplay.text = "Score: " + score.ToString();
+            coinSound.Play();
+            Destroy(other.gameObject);
+        }
+    }
+
 }

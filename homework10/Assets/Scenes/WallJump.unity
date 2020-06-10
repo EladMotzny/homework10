@@ -4442,7 +4442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad363dc3e5b1b0348b7b81e4eac07287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
+  mouseSensitivity: 30
   playerBody: {fileID: 1137046388}
 --- !u!1001 &993116986
 PrefabInstance:
@@ -5369,6 +5369,7 @@ MonoBehaviour:
   score: 0
   coinSound: {fileID: 1137046390}
   scoreDisplay: {fileID: 706627810}
+  coinsCollected: 0
 --- !u!82 &1137046390
 AudioSource:
   m_ObjectHideFlags: 0
